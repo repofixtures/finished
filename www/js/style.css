@@ -1,0 +1,33 @@
+/* 
+    Document   : style
+    Created on : Sep 30, 2013, 11:25:01 AM
+    Author     : eabuslaiman
+*/
+.ui-body-c, .ui-overlay-c {
+border: 1px solid #444 !important;
+background: #222 !important;
+color: #fff !important;
+text-shadow: 0 1px 0 #111 !important;
+font-weight: 400 !important;
+background-image: -webkit-gradient(linear,left top,left bottom,from(#444),to(#222)) !important;
+background-image: -webkit-linear-gradient(#444,#222) !important;
+background-image: -moz-linear-gradient(#444,#222) !important;
+background-image: -ms-linear-gradient(#444,#222) !important;
+background-image: -o-linear-gradient(#444,#222) !important;
+background-image: linear-gradient(#444,#222) !important;
+}
+
+ui-body {
+    width: 6em;
+    margin:0 auto;
+}
+
+/*Buttons*/
+
+#start_button {
+    background-color:limegreen;
+}
+
+#stop_button {
+    background-color:red;
+}

@@ -1,0 +1,52 @@
+/* 
+    Document   : style
+    Created on : Sep 30, 2013, 11:25:01 AM
+    Author     : eabuslaiman
+*/
+
+ui-body {
+    width: 6em;
+    margin:0 auto;
+}
+
+/*Buttons*/
+
+#start_button {
+    background:limegreen;
+}
+
+#stop_button {
+    background:gray;
+}
+
+#stop_button:active,
+#start_button:active{
+   background-color:gray !important;
+}
+
+#servicesList .ui-icon-arrow-r{
+    display:none;
+}
+
+#servicesList .ui-li-count{
+    right:15px;
+}
+
+#status_message_div{
+    margin:0 auto 15px auto !important;
+    width:80%;
+    height:auto;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-align:center;
+    border: 1px solid gray;
+    display:none;
+    padding:10px;
+}
+
+#status_message{
+    color:lime;
+    font-size:13px;
+    font-weight:normal;
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1;" />
+        <title>Hydrogen</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery.js"></script>
+        <script src="js/jquery.mobile-1.3.2.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/custom.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+
+            $(document).ready(function() {
+                $("#status_message_div").on('click', function() {
+                    if ($("#status_message_div").css('display') != 'none') {
+                        $("#status_message_div").fadeOut("slow");
+                    } else {
+                        $("#status_message_div").fadeIn("slow");
+                    }
+                });
+            });
+
+            function showEnabledServices($elementToAppend) {
+                var $servicesEnabled = window.localStorage.getEnabledServices();
+                var $html = "";
+                for (var m = 0; m < $servicesEnabled.length; m++) {
+                    var id = $servicesEnabled[m].urn;
+                    $html += "<li><a href='#'><b>"
+                        + $servicesEnabled[m].name
+                        + "</b> states<span class='ui-li-count ui-btn-up-c ui-btn-corner-all' id='" + id + "' name='" + id + "'>"
+                        + statesRegistry.getNumberStates(id) + "</span></a></li>";
+                }
+                $elementToAppend.empty().append($html);
+            }
+        </script>
+    </head>
+    <body>
+        <div data-role="page" id="page1" data-theme="a">
+            <div data-role="content" style="padding: 0px;">
+                <div data-role="header" class="ui-header ui-bar-a"
+                     data-position="fixed">
+                    <h1 class="ui-title" role="heading" aria-level="1">Hydrogen</h1>
+                    <a
+                        class="ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-a"
+                        data-icon="gear" href="#page2" data-corners="true"
+                        data-shadow="true" data-iconshadow="true" data-wrapperels="span"
+                        data-theme="a" data-transition="slidedown"><span class="ui-btn-inner ui-btn-corner-all"><span
+                                class="ui-btn-text">Services</span></span></a> <a
+                        class="ui-btn-right ui-btn ui-shadow ui-btn-corner-all ui-btn-up-a"
+                        id="login_btn" data-icon="gear" href="#" data-corners="true"
+                        onclick="custom.login();" data-shadow="true" data-iconshadow="true"
+                        data-wrapperels="span" data-theme="a" data-transition="slidedown"><span
+                            class="ui-btn-inner ui-btn-corner-all"><span
+                                class="ui-btn-text" name="login_navbar">Login</span></span></a>
+                </div>
+                <div class="ui-body">
+
+                    <div style="margin: 0 auto:padding-bottom:30px; width: 100%">
+                        <p
+                            style="margin-left: 0 auto; width: 100%; text-align: center; letter-spacing: 20px; text-shadow: .2em .2em .2em white; margin-bottom: 20px; color: white">
+                            Hydrogen</p>
+                        <div style="margin: 0 auto; width: 100%; height: 80px">
+                            <div style="margin: 0 auto; width: 230px">
+                                <img src="css/images/harvester.png" alt="harvester"> <span
+                                    style="display: block; margin-top: 27px; float: right">The
+                                    states harvester</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <fieldset class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <a data-role="button" id="start_button"
+                                   onclick="custom.contextInit();"><font size="2px">Start
+                                    harvester</font></a>
+                            </div>
+                            <div class="ui-block-b">
+                                <a data-role="button" id="stop_button"
+                                   onclick="custom.contextStop();"><font size="2px">Stop
+                                    harvester</font></a>
+                            </div>
+                        </fieldset>
+                        <div>
+
+                            <!--ListView with services start-->
+                            <ul id="servicesList" data-role="listview" style="margin: 0;"
+                                data-count-theme="c" data-inset="true">
+
+                            </ul>
+                            <script type="text/javascript">
+                                showEnabledServices($("#servicesList"));
+                            </script>
+                            <!--ListView with services end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--             <div data-role="header" class="ui-bar-a" role="banner" style="position:fixed; width:100%; bottom:0; z-index:5000;"> -->
+            <!-- 			<div data-role="footer" data-position="fixed" data-tap-toggle="false" id='status_message_div'> -->
+            <!--                 <span id='status_message'>Testing</span> -->
+            <!--             </div> -->
+            <div data-position="fixed" data-tap-toggle="false"
+                 style='width: 100%; height: auto; margin-bottom: 15px;'>
+                <div data-role="footer" data-tap-toggle="false"
+                     id='status_message_div'>
+                    <span id='status_message'></span>
+                </div>
+            </div>
+
+        </div>
+        <div data-role="page" id="page2" data-theme="a">
+            <div data-role="content" style="padding: 0px;">
+                <div data-role="header" class="ui-header ui-bar-a" role="banner">
+                    <h1 class="ui-title" role="heading" aria-level="1">Services</h1>
+                    <a href="#"
+                       class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-down-a ui-btn-up-a"
+                       data-rel="back" data-icon="arrow-l" data-theme="a"><span
+                            class="ui-btn-inner ui-btn-corner-all"><span
+                                class="ui-btn-text">Back</span><span
+                                class="ui-icon ui-icon-arrow-l ui-icon-shadow"></span></span></a>
+                </div>
+                <div class="ui-body" id="services_list_config">
+                    <!--Services lists-->
+                    <script type="text/javascript">
+                        //                        for(var m=0; m < SERVICES.length; m++){
+                        //                            document.write("<label><input type='checkbox' name='services' id='" + SERVICES[m].urn + "' value='" + SERVICES[m].name + "'/>" + SERVICES[m].name + "</label>");
+                        //                        }
+                    </script>
+                    <!--Services list-->
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $("#page1").on('pagebeforeshow', function() {
+                $("#servicesList").listview("refresh");
+            });
+
+            $('#page2').on('pageinit', function(event) {
+                var $arrServices = window.localStorage.getEnabledServices();
+
+                var services = $("input[name=services]");
+                //For checkboxes
+                $.each(services, function() {
+                    var serviceName = this.value;
+                    for (var m = 0; m < $arrServices.length; m++) {
+                        if ($arrServices[m].name == serviceName) {
+                            $(this).prop("checked", "checked");
+                            $("input[type='checkbox']").checkboxradio("refresh"); //Refresh the state of all checkboxes in the page
+                        }
+                    }
+                });
+            });
+
+            $("#page2")
+            .on(
+            'pagebeforeshow',
+            function() {
+                $("#services_list_config").empty();
+                for (var m = 0; m < SERVICES.length; m++) {
+                    $("#services_list_config")
+                    .append(
+                    "<label><input type='checkbox' name='services' id='" + SERVICES[m].urn + "' value='" + SERVICES[m].name + "'/>"
+                        + SERVICES[m].name
+                        + "</label>").trigger(
+                    "create");
+                }
+
+                var $arrServices = window.localStorage
+                .getEnabledServices();
+
+                var services = $("input[name=services]");
+                //For checkboxes
+                $.each(services, function() {
+                    var serviceName = this.value;
+                    for (var m = 0; m < $arrServices.length; m++) {
+                        if ($arrServices[m].name == serviceName) {
+                            $(this).prop("checked", "checked");
+                            $("input[type='checkbox']")
+                            .checkboxradio("refresh"); //Refresh the state of all checkboxes in the page
+                        }
+                    }
+                });
+
+                //Local storage logic
+                $(":checkbox[name=services]")
+                .bind(
+                "change",
+                function(event) {
+                    var checked = this.checked;
+                    var $arrServices = window.localStorage
+                    .getEnabledServices();
+
+                    var serviceObj = null;
+                    for (var i = 0; i < SERVICES.length; i++) {
+                        if (SERVICES[i].name == $(
+                        this).val()) {
+                            serviceObj = SERVICES[i];
+                        }
+                    }
+
+                    if (checked) {
+                        $arrServices
+                        .push(serviceObj);
+                    } else {
+                        for (var m = 0; m < $arrServices.length; m++) {
+                            if ($arrServices[m].name == $(
+                            this).val()) {
+                                $arrServices
+                                .splice(m,
+                                1);
+                            }
+                        }
+                    }
+
+                    window.localStorage.setObj(
+                    TAG_SERVICES_ENABLED,
+                    $arrServices);
+                    showEnabledServices($("#servicesList"));
+                });
+            });
+        </script>
+    </body>
+</html>
